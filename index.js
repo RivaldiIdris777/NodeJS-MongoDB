@@ -1,13 +1,21 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { DB_NAME, DB_USERNAME, DB_PASSWORD, PORT } = require('./config/keyfile');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const { success, error } = require("consola");
+const { DB_NAME, DB_USERNAME, DB_PASSWORD, PORT } = require('./config/keyfile');
 
+const productRoutes = require('./Routes/Product');
+
+// Running ExpressJs
 const app = express();
+
+// Routes Product
+app.use('/node/', productRoutes);
 
 app.use(bodyParser.json({ extended: true }));
 app.use(bodyParser.urlencoded({ extended:true }));
+app.use(cors());
 
 
 // MongoDB Connect
