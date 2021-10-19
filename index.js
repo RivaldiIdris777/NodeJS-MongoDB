@@ -6,6 +6,7 @@ const { success, error } = require("consola");
 const { DB_NAME, DB_USERNAME, DB_PASSWORD, PORT } = require('./config/keyfile');
 
 const productRoutes = require('./Routes/Product');
+const categoryRoutes = require('./Routes/Category');
 
 // Running ExpressJs
 const app = express();
@@ -16,6 +17,7 @@ app.use(cors());
 
 // Routes Product
 app.use('/node/', productRoutes);
+app.use('/node/', categoryRoutes);
 
 
 // MongoDB Connect
