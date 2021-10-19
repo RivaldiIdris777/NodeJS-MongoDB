@@ -10,12 +10,12 @@ const productRoutes = require('./Routes/Product');
 // Running ExpressJs
 const app = express();
 
-// Routes Product
-app.use('/node/', productRoutes);
-
 app.use(bodyParser.json({ extended: true }));
 app.use(bodyParser.urlencoded({ extended:true }));
 app.use(cors());
+
+// Routes Product
+app.use('/node/', productRoutes);
 
 
 // MongoDB Connect
