@@ -3,7 +3,7 @@ const ProductModel = require('../models/Product');
 
 const getAllProducts = async (req, res) => {
     try {
-        const getDataProducts = await ProductModel.find();
+        const getDataProducts = await ProductModel.find().populate('categoryId','nameCategory');
         return res.status(201).json({
             message: "Success get all data products",
             success: true,
@@ -28,6 +28,7 @@ const addProduct = async (req, res) => {
             _id: new mongoose.Types.ObjectId(),
             name: req.body.name,
             price: req.body.price,
+            categoryId: req.body.category,
             desc: req.body.desc,
             productImage: req.body.productImage
         })
@@ -55,6 +56,7 @@ const updateProduct = async (req, res) => {
         const productForm = {
             name: req.body.name,
             price: req.body.price,
+            categoryId: req.body.category,
             desc: req.body.desc,
             productImage: req.body.productImage
         };
