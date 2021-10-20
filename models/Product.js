@@ -21,6 +21,9 @@ const productSchema = mongoose.Schema({
     productImage: { 
         type:String, 
         required: true
+    },
+    cloudinary_id: {
+        type: String,        
     }
 }, { timestamps: true }
 );

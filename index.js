@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const { success, error } = require("consola");
+const morgan = require('morgan');
+const fileUpload = require('express-fileupload')
 const { DB_NAME, DB_USERNAME, DB_PASSWORD, PORT } = require('./config/keyfile');
 
 const productRoutes = require('./Routes/Product');
@@ -13,6 +15,7 @@ const app = express();
 
 app.use(bodyParser.json({ extended: true }));
 app.use(bodyParser.urlencoded({ extended:true }));
+app.use(morgan("dev"));
 app.use(cors());
 
 // Routes Product
