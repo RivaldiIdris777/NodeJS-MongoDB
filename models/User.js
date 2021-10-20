@@ -25,7 +25,10 @@ const userSchema = mongoose.Schema({
     },
     userImage: {
         type: String,        
-    }
+    },
+    cloudinary_id: {
+        type: String
+    },
 
 },  
     { timestamps: true }

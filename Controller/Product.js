@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 const ProductModel = require('../models/Product');
 const cloudinary = require('../Middleware/Cloudinary');
+const Category = require('../models/Category')
 
 const getAllProducts = async (req, res) => {
     try {
-        const getDataProducts = await ProductModel.find().populate('categoryId','nameCategory');
+        const getDataProducts = await ProductModel.find().populate('category','nameCategory');
         return res.status(201).json({
             message: "Success get all data products",
             success: true,
@@ -31,12 +32,13 @@ const addProduct = async (req, res) => {
             return res.status(500).json("Data Kosong")
         }
 
-        const cld = await cloudinary.uploader.upload(req.file.path)
+        Category.findById(req.body.categoryId);
+        const cld = await cloudinary.uploader.upload(req.file.path)        
         const productForm = new ProductModel({
-            _id: new mongoose.Types.ObjectId(),
+            _id: mongoose.Types.ObjectId(),
             name: req.body.name,
             price: req.body.price,
-            categoryId: req.body.category,
+            category: req.body.category,
             desc: req.body.desc,
             productImage: cld.url,
             cloudinary_id: cld.public_id
@@ -72,7 +74,7 @@ const updateProduct = async (req, res) => {
             console.log(req.file)
             return res.status(500).json("Data Kosong");
         }        
-        
+
         const cld = await cloudinary.uploader.upload(req.file.path)        
 
         const productForm = {

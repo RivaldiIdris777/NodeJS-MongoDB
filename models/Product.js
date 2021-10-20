@@ -10,9 +10,8 @@ const productSchema = mongoose.Schema({
         type: Number, 
         required: true
     },
-    categoryId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Category',        
+    category: {
+        type: mongoose.Schema.Types.ObjectId, ref:'Category',required: true 
     },
     desc: { 
         type: String, 
