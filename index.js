@@ -8,6 +8,7 @@ const { DB_NAME, DB_USERNAME, DB_PASSWORD, PORT } = require('./config/keyfile');
 
 const productRoutes = require('./Routes/Product');
 const categoryRoutes = require('./Routes/Category');
+const userRoutes = require('./Routes/User');
 
 // Running ExpressJs
 const app = express();
@@ -19,8 +20,10 @@ app.use(cors());
 
 // Routes Product
 app.use('/node/', productRoutes);
+// Routes Category
 app.use('/node/', categoryRoutes);
-
+// Routes User
+app.use('/node/', userRoutes);
 
 // MongoDB Connect
 const mongoStart = async () => {
