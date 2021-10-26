@@ -83,7 +83,8 @@ const userLogin = async (req, res) => {
                 expiresIn: 168
             }
 
-            return res.status(200).json({
+            return res.cookie('jwt', `Bearer ${token}`),
+                res.status(200).json({
                 message: "Congrats! You are now login",
                 success: true,
                 ...result,                
@@ -95,6 +96,10 @@ const userLogin = async (req, res) => {
             success: false,            
         }, console.log(error))
     }
+}
+
+const userLogout = async (req, res) => {
+    res.cookie('jwt','', { expiresIn: "1" })
 }
 
 // Support code
@@ -111,5 +116,6 @@ const validateEmail = async email => {
 
 module.exports = {
     userRegister,
-    userLogin
+    userLogin,
+    userLogout,
 }

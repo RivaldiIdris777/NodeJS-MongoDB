@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const { success, error } = require("consola");
 const morgan = require('morgan');
 const { DB_NAME, DB_USERNAME, DB_PASSWORD, PORT } = require('./config/keyfile');
+const cookieparser = require('cookie-parser');
 
 const productRoutes = require('./Routes/Product');
 const categoryRoutes = require('./Routes/Category');
@@ -18,6 +19,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended:true }));
 app.use(passport.initialize());
+app.use(cookieparser());
 app.use(morgan("dev"));
 app.use(cors());
 
