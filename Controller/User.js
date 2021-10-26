@@ -28,7 +28,7 @@ const userRegister = async (req, res) => {
         }
 
         // Use hash password
-        const password = await bcrypt.hash(req.body.password);
+        const password = await bcrypt.hash(req.body.password, 12);
         // Role Default 
         const roleDefault = 'user';
         // Create new user

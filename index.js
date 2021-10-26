@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const passport = require("passport");
 const cors = require('cors');
 const mongoose = require('mongoose');
 const { success, error } = require("consola");
@@ -9,14 +10,18 @@ const { DB_NAME, DB_USERNAME, DB_PASSWORD, PORT } = require('./config/keyfile');
 const productRoutes = require('./Routes/Product');
 const categoryRoutes = require('./Routes/Category');
 const userRoutes = require('./Routes/User');
+const superAdminRoutes = require('./Routes/SuperAdmin');
 
 // Running ExpressJs
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended:true }));
+app.use(passport.initialize());
 app.use(morgan("dev"));
 app.use(cors());
+
+require('./Middleware/Passport.js')(passport);
 
 // Routes Product
 app.use('/node/', productRoutes);
@@ -24,6 +29,8 @@ app.use('/node/', productRoutes);
 app.use('/node/', categoryRoutes);
 // Routes User
 app.use('/node/', userRoutes);
+// Router Superadmin
+app.use('/node/', superAdminRoutes);
 
 // MongoDB Connect
 const mongoStart = async () => {

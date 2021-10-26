@@ -2,6 +2,20 @@ const mongoose = require('mongoose');
 const ProductModel = require('../models/Product');
 const cloudinary = require('../Middleware/Cloudinary');
 const Category = require('../models/Category')
+const passport = require('passport');
+
+// Support code
+const checkAuth = passport.authenticate("jwt", { session: false });
+
+const checkRole = roles => (req, res, next) => 
+    !roles.includes(req.user.role)
+    ? res.status(401).json({
+        message: "The page you want to access doesnt exist",
+        success: false
+    })
+    : next();
+
+// Support code
 
 const getAllProducts = async (req, res) => {
     try {
@@ -89,7 +103,7 @@ const updateProduct = async (req, res) => {
         await ProductModel.findByIdAndUpdate(id, productForm, { new: true})
         return res.status(201).json({
             message: "Success, Product data updated",
-            success: false,
+            success: true,
             detailProduct: {
                 productForm
             }
@@ -128,6 +142,8 @@ const deleteProduct = async (req, res) => {
 }
 
 module.exports = {
+    checkAuth,
+    checkRole,
     getAllProducts,
     addProduct,
     updateProduct,
