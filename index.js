@@ -16,6 +16,12 @@ const superAdminRoutes = require('./Routes/SuperAdmin');
 // Running ExpressJs
 const app = express();
 
+// Middleware
+app.use(express.static('public'))
+
+// View Engine
+app.set('view engine', 'ejs');
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended:true }));
 app.use(passport.initialize());

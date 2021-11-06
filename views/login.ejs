@@ -1,0 +1,48 @@
+<%- include('bodyHtml/header'); -%>
+
+  <form action="/node/login" method="post">
+    <h2>Login</h2>
+    <label for="username">Username</label>
+    <input type="text" name="username" required />
+    <div class="username error">some error</div>
+    <label for="password">Password</label>
+    <input type="password" name="password" required />
+    <div class="password error"></div>
+    <button>login</button>
+  </form>
+
+<%- include('bodyHtml/footer'); -%>
+
+<script>
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // reset errors
+    usernameError.textContent = '';    
+    passwordError.textContent = '';
+
+    // get the values
+    const username = form.username.value;
+    const password = form.password.value;
+
+    try {
+      const res = await fetch('/node/login', {
+            method: 'post',
+            body: JSON.stringify({ username, password }),
+            headers: { 'Content-Type': 'application/json' }
+      });
+      const data = await res.json();
+      console.log(data);
+      if (data.errors) {            
+        usernameError.textContent = data.errors.username;
+        passwordError.textContent = data.errors.password;            
+      }
+      if (data.user) {
+        location.assign('/node/dashboard');
+      }
+    } catch (error) {
+      console.log(err);
+    }
+    
+  });
+</script>
